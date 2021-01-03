@@ -1,0 +1,73 @@
+{% load bootstrap3%} 
+{% block content %}
+
+<div class="container">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                    aria-expanded="false">
+                </button>
+
+                <div class="panel-heading">
+                    <div class="col-md-4">
+                        <a href="{%url 'welcome'%}">
+                            <img id="panelpic" src="../../static/images/ignav.png" alt="instagram logo on nav-bar " style="width:53px; height:30px;margin-top:5px;margin-left:26px;border-right:1px solid;padding-right: 23px; ">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="homenav">
+                    <div class="col-md-4">
+                        <a href="{%url 'welcome'%}">
+                            <img src="../../static/images/iglogo.svg" alt="Instagram name on nav-bar " style="width:120px; height:30px; margin-left: 50px;">
+                        </a>
+                    </div>
+                </div>
+            
+            </div>
+               
+                  <div class="center">
+                      <div class="col-md-6">
+                          <form class="navbar-form" role="search" action="{% url 'search' %}" style="margin-left: 250px;"> 
+                              <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search" name="user">
+                              </div>
+                          </form>
+                    </div>
+                  </div>
+               
+            <div class="container">
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                
+                      <li>
+                        <a href="{%  url 'welcome'%}">
+                            <i class="glyphicon glyphicon-home" style="font-size:26px;padding-top: 14%;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/logout">
+                            <i class="glyphicon glyphicon-log-out" style="font-size:26px;padding-top: 14%;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'new-post' %}">
+                            <i class="glyphicon glyphicon-camera" style="font-size:26px;padding-top: 14%;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{%url 'profile' user.id %}">
+                            <i class="glyphicon glyphicon-user" style="font-size:26px;padding-top: 14%;"></i>
+                        </a>
+                    </li>
+                    </ul>
+                </div>
+
+            </div>
+
+    </nav>
+ 
+{% endblock %}
