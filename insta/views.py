@@ -17,3 +17,20 @@ def posts(request):
     follows=Follow.objects.filter(following=request.user.id)
     images = Image.objects.filter(profile = request.user.followings.follower)
     return render(request, 'all-views/post.html',{"images":images})
+
+@login_required(login_url='/accounts/login/')
+def post(request):
+    current_user = request.user
+    profile = Profile.objects.get(user = request.user.id)
+    if request.method == 'POST':
+        form = ImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            image = form.save(commit=False)
+            image.profile = current_user
+            image.user_profile = profile
+            image.save()
+        return redirect('profile',current_user.id)
+
+    else:
+        form = ImageForm()
+    return render(request, 'new_post.html', {"form": form})
