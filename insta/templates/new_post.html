@@ -1,94 +1,34 @@
-{% load bootstrap3%} 
-{% block content %}
+{% load bootstrap3 %} {% load staticfiles %}
+<!DOCTYPE html>
+<html>
 
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<div class="container">
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            
+  <title>New post</title>
+  {{form.media}}
 
-        
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-                    aria-expanded="false">
-                </button>
-            
-                
-                <div class="panel-heading">
-                    <div class="col-md-4">
-                        <a href="{%url 'welcome'%}">
-                            <img id="panelpic" src="../../static/images/ignav.png" alt="instagram logo on nav-bar " style="width:53px; height:30px;margin-top:5px;margin-left:26px;border-right:1px solid;padding-right: 23px; ">
-                        </a>
-                    </div>
-                </div>
-            
-            
-                <div class="homenav">
-                    <div class="col-md-4">
-                        <a href="{%url 'welcome'%}">
-                            <img src="../../static/images/iglogo.svg" alt="Instagram name on nav-bar " style="width:120px; height:30px; margin-left: 50px;">
-                        </a>
-                    </div>
-                </div>
-            
-            
-               
-            </div>
-               
-                  <div class="center">
-                      <div class="col-md-6">
-                          <form class="navbar-form" role="search" action="{% url 'search' %}" style="margin-left: 250px;"> 
-         
+{% block styles %} {% bootstrap_css %}
+  <link rel="stylesheet" href="{% static 'css/news.css' %}"> {% endblock %}
+
+</head>
+
+<body>
+  <div class="jumbotron">
+  <form  action="{%url 'new-post'%}" method="post" enctype="multipart/form-data" style="padding-left: 6%;padding-right:10%; padding-bottom: 20%">
+    {%csrf_token%}
+    
+    {% bootstrap_form form%}
+    <input type="submit" class="btn btn-success btn-lg" value="Post">
   
-                              <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search" name="user">
-                                
-                              </div>
-                      
-                            </form>
-                    </div>
-                  </div>
-               
+  </form>
+</div>
 
+   {% block scripts %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  {% bootstrap_javascript %} {% endblock %}
 
+</body>
 
-
-            <div class="container">
-
-                
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-right">
-                
-                      <li>
-                        <a href="{%  url 'welcome'%}">
-                            <i class="glyphicon glyphicon-home" style="font-size:26px;padding-top: 14%;"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/logout">
-                            <i class="glyphicon glyphicon-log-out" style="font-size:26px;padding-top: 14%;"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'new-post' %}">
-                            <i class="glyphicon glyphicon-camera" style="font-size:26px;padding-top: 14%;"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{%url 'profile' user.id %}">
-                            <i class="glyphicon glyphicon-user" style="font-size:26px;padding-top: 14%;"></i>
-                        </a>
-                    </li>
-                    </ul>
-                </div>
-
-
-            </div>
-
-    </nav>
-
-
-
-
-   
-{% endblock %}
+</html>
