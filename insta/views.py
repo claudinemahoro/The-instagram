@@ -52,5 +52,28 @@ def profile(request,profile_id):
 
     followers=Follow.objects.filter(follower = user).count()
     followings=Follow.objects.filter(following=user).count()
-    
+
     return render(request,"all-views/profile.html",{"images":images,"profile":profile,"title":title,"is_follow":is_follow,"followers":followers,"followings":followings})
+
+@login_required(login_url='/accounts/login/')
+def updateProfile(request):
+
+    current_user=request.user
+    if request.method =='POST':
+        if Profile.objects.filter(user_id=current_user).exists():
+            form = UpdateProfile(request.POST,request.FILES,instance=Profile.objects.get(user_id = current_user))
+        else:
+            form=UpdateProfile(request.POST,request.FILES)
+        if form.is_valid():
+          profile=form.save(commit=False)
+          profile.user=current_user
+          profile.save()
+          return redirect('profile',current_user.id)
+    else:
+
+        if Profile.objects.filter(user_id = current_user).exists():
+           form=UpdateProfile(instance =Profile.objects.get(user_id=current_user))
+        else:
+            form=UpdateProfile()
+
+    return render(request,'all-views/update.html',{"form":form})        
