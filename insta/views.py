@@ -1,8 +1,8 @@
 from django.shortcuts import render,redirect
 from django.http  import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-# from .models import Image,User,Profile,Follow,Comment
-# from .forms import ImageForm,UpdateProfile,CommentForm
+from .models import Image,User,Profile,Follow,Comment
+from .forms import ImageForm,UpdateProfile,CommentForm
 # Create your views here.
 
 @login_required(login_url='/accounts/login/')
