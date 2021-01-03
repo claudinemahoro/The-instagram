@@ -117,3 +117,22 @@ def likepost(request,image_id):
         images.likes.add(request.user)
         is_liked=True
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+@login_required(login_url='/accounts/login/')     
+def new_comment(request,image_id):
+    current_user=request.user
+    
+    image = Image.get_image_by_id(image_id)
+    print(current_user)
+    if request.method=='POST':
+        form=CommentForm(request.POST,request.FILES)
+        if form.is_valid():
+            comment=form.save(commit=False)
+            comment.postedby=current_user
+            comment.commentImage=image
+            comment.save()
+            return redirect('welcome')
+    else:
+        form=CommentForm()
+    
+    return render(request,'all-views/comment.html',{"form":form,"image":image})
