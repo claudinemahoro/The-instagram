@@ -15,3 +15,5 @@ urlpatterns=[
     url(r'^comment/(\d+)/$',views.new_comment,name='comment')
     
 ]
+if settings.DEBUG:
+    urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
