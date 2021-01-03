@@ -105,3 +105,15 @@ def search_results(request):
         message = "You haven't searched for any term"
         return render(request, 'all-views/search.html',{"message":message})
      
+@login_required(login_url='/accounts/login/')
+def likepost(request,image_id):
+
+    images=Image.objects.get(pk=image_id)
+    is_liked=False
+    if images.likes.filter(id=request.user.id).exists():
+            images.likes.remove(request.user)
+            is_liked=False
+    else:
+        images.likes.add(request.user)
+        is_liked=True
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
