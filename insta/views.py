@@ -11,3 +11,9 @@ def welcome(request):
     all_images=Image.objects.all()
     profile=Profile.objects.all()
     return render(request, 'all-views/index.html',{"images":all_images})
+
+@login_required(login_url='/accounts/login/')
+def posts(request):
+    follows=Follow.objects.filter(following=request.user.id)
+    images = Image.objects.filter(profile = request.user.followings.follower)
+    return render(request, 'all-views/post.html',{"images":images})
