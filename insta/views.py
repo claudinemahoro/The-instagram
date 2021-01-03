@@ -76,4 +76,18 @@ def updateProfile(request):
         else:
             form=UpdateProfile()
 
-    return render(request,'all-views/update.html',{"form":form})        
+    return render(request,'all-views/update.html',{"form":form})   
+    
+def follow(request,user_to):
+
+    user=User.objects.get(id=user_to)
+    is_follow=False
+    if Follow.objects.filter(following=request.user,follower=user).exists():
+        Follow.objects.filter(following=request.user,follower=user).delete()
+        is_follow=False
+    else:
+        Follow(following=request.user,follower=user).save()
+        is_follow=True
+
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+     
