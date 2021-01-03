@@ -90,4 +90,18 @@ def follow(request,user_to):
         is_follow=True
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+@login_required(login_url='/accounts/login/')
+def search_results(request):
+
+    if 'user' in request.GET and request.GET["user"]:
+        search_term = request.GET.get("user")
+        searched_user = Profile.search_by_name(search_term)
+        message = f"{search_term}"
+
+        return render(request, 'all-views/search.html',{"message":message,"users": searched_user})
+
+    else:
+        message = "You haven't searched for any term"
+        return render(request, 'all-views/search.html',{"message":message})
      
