@@ -34,3 +34,23 @@ def post(request):
     else:
         form = ImageForm()
     return render(request, 'new_post.html', {"form": form})
+
+@login_required(login_url='/accounts/login/')
+def profile(request,profile_id):
+    '''
+    Method that fetches a users profile page
+    '''
+    user=User.objects.get(pk=profile_id)
+    images = Image.objects.filter(profile = profile_id)
+    title = User.objects.get(pk = profile_id).username
+    profile = Profile.objects.filter(user = profile_id)
+
+    if Follow.objects.filter(following=request.user,follower=user).exists():
+        is_follow=True
+    else:
+        is_follow=False
+
+    followers=Follow.objects.filter(follower = user).count()
+    followings=Follow.objects.filter(following=user).count()
+    
+    return render(request,"all-views/profile.html",{"images":images,"profile":profile,"title":title,"is_follow":is_follow,"followers":followers,"followings":followings})
