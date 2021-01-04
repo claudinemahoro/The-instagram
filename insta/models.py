@@ -11,7 +11,17 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user
-
+    def save_profile(self):
+        self.save()
+    def delete_profile(self):
+        self.delete()
+    @classmethod
+    def display_profile(cls):
+        profile=Profile.objects.all()
+        for profile in profiles:
+            return profile
+    class Meta:
+        ordering=['user']
     @classmethod
     def search_by_name(cls,search_term):
         news = cls.objects.filter(user__username__icontains = search_term)
