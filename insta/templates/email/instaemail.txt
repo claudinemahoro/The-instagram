@@ -1,0 +1,3 @@
+Hello {{name}}
+
+Welcome to the instagram clone made by Coco. You will find and enjoy the exciting photos of your friends.

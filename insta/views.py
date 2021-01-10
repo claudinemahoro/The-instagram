@@ -1,8 +1,9 @@
 from django.shortcuts import render,redirect
-from django.http  import HttpResponse,HttpResponseRedirect
+from django.http  import HttpResponse,Http404,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from .models import Image,User,Profile,Follow,Comment
 from .forms import ImageForm,UpdateProfile,CommentForm
+from .email import send_welcome_email
 # Create your views here.
 
 @login_required(login_url='/accounts/login/')
@@ -10,7 +11,23 @@ def welcome(request):
     current_user= request.user
     all_images=Image.objects.all()
     profile=Profile.objects.all()
+    # if request.method == 'POST':
+    #     form = registration_form(request.POST)
+    #     if form.is_valid():
+    #         name = form.cleaned_data['your_name']
+    #         email = form.cleaned_data['email']
+
+    #         recipient = EmailRecipients(name = name,email =email)
+    #         recipient.save()
+    #         send_welcome_email(name,email)
+
+    #         HttpResponseRedirect('welcome')
+    # # else:
+    #     form = registration_form()
+    # return render(request, 'registration/registration_form.html')
+
     return render(request, 'all-views/index.html',{"images":all_images})
+
 
 @login_required(login_url='/accounts/login/')
 def posts(request):
@@ -136,3 +153,43 @@ def new_comment(request,image_id):
         form=CommentForm()
     
     return render(request,'all-views/comment.html',{"form":form,"image":image})
+
+
+# from .email import send_welcome_email
+# def reg(request):
+#     if request.method == 'POST':
+#         form = registration_form(request.POST)
+#         if form.is_valid():
+#             name = form.cleaned_data['your_name']
+#             email = form.cleaned_data['email']
+
+#             recipient = EmailRecipients(name = name,email =email)
+#             recipient.save()
+#             send_welcome_email(name,email)
+
+#             HttpResponseRedirect('reg')
+#     else:
+#         form = registration_form()
+#     return render(request, 'registration/registration_form.html')
+
+    
+#     @login_required(login_url='/accounts/login/')
+# def home_images(request):
+#     # if request.GET.get('search_iterm'):
+#     #     pictures=Image.search(request.GET.get('search_iterm'))
+#     # else:
+#     pictures=Image.objects.all()
+#     current_user=request.user
+#     myprof=Profile.objects.filter(id=current_user.id).first()
+#     comment=Comment.objects.filter(id=current_user.id).first()
+#     form=NewsLetterForm
+#     if request.method== 'POST':
+#         form=NewsLetterForm(request.POST or None)
+#         if form.is_valid():
+#             name=form.cleaned_data['your_name']
+#             email=form.cleaned_data['email']
+#             recipient=NewsLetterRecipients(name=name,email=email)
+#             recipient.save()
+#             send_welcome_email(name,email)
+#             HttpResponseRedirect('home_images')
+#     return render(request,'index.html',{"pictures":pictures,'letterForm':form,"comment":comment,"myprof":myprof})

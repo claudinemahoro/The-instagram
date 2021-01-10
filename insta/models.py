@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
-# Create your models here.
 import datetime as dt
 from tinymce.models import HTMLField
+# Create your models here.
 
 class Profile(models.Model):
     bio=models.TextField(max_length=100,blank=True,default="bio please...")
@@ -46,9 +46,6 @@ class Image(models.Model):
     def update_caption(cls,id,caption):
         captions=cls.objects.filter(caption_id=id).update(image_caption = caption)
         return captions
-
-    
-
     @classmethod
     def get_image_by_id(cls,image_id):
         images=cls.objects.get(id=image_id)
@@ -75,3 +72,7 @@ class Comment(models.Model):
     
     def __str__(self):
         return str(self.postedby)
+
+# class EmailRecipients(models.Model):
+#     name = models.CharField(max_length = 30)
+#     email = models.EmailField()
