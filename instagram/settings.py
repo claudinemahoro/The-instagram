@@ -23,12 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = '-yzsa@8ll-^0np-=o#)v8!u-2u^^hqo#bf-4aqmd3vy60!n3b*'
-MODE=config("MODE", default="dev")
+
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
-# SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-
+MODE=config('MODE', default="dev")
 if config('MODE')=="dev":
    DATABASES = {
        'default': {
@@ -41,7 +39,7 @@ if config('MODE')=="dev":
        }
        
    }
-# production
+
 else:
    DATABASES = {
        'default': dj_database_url.config(
@@ -53,9 +51,6 @@ db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
-
-# ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -104,8 +99,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'instagram.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -116,8 +109,6 @@ DATABASES = {
     }
 }
 
-# Password validation
-# https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -135,8 +126,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/1.11/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
